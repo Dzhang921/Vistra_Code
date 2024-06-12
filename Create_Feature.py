@@ -119,3 +119,13 @@ def create_cluster_list(data, use_variables):
         variable_list[idx[i]-1].append(use_variables[i])
     
     return variable_list
+
+
+def holiday_ind(data,target):
+    # Import holidays
+    from pandas.tseries.holiday import USFederalHolidayCalendar
+    import pandas as pd
+    calendar = USFederalHolidayCalendar()
+    holidays = pd.to_datetime(calendar.holidays(start='2018-01-01', end='2025-12-31'))
+
+    data['holiday_ind'] = data[target].apply(lambda x: 1 if x in holidays else 0)
